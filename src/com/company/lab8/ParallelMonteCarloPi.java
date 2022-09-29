@@ -27,7 +27,7 @@ public class ParallelMonteCarloPi {
                     foundNeededPoints.incrementAndGet();
                 }
                 long iterations = iterationsRun.incrementAndGet();
-                if (iterations >= NUM_OF_ITERATIONS) {
+                if (iterations == NUM_OF_ITERATIONS) {
                     double pi = ((double) foundNeededPoints.get() / NUM_OF_ITERATIONS) * 4;
                     long end = System.currentTimeMillis();
 
@@ -36,6 +36,8 @@ public class ParallelMonteCarloPi {
                     System.out.println("ITERATIONS " + NUM_OF_ITERATIONS);
                     System.out.println("TIME " + (end - start) + "ms");
                     return;
+                } else if (iterations > NUM_OF_ITERATIONS) {
+                    return;
                 }
             }
         };
@@ -43,6 +45,8 @@ public class ParallelMonteCarloPi {
         for (int i = 0; i <= threadCount; i++) {
             threadPool.execute(task);
         }
+
+        threadPool.shutdown();
     }
 
     private boolean isNeededPoint(double x, double y) {
