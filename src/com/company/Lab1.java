@@ -23,6 +23,7 @@ public class Lab1 {
     private static String[] findStrings(String[] input, boolean largerThanAverage) {
         int totalLength = 0;
 
+
         for (String s : input) {
             totalLength += s.length();
         }
